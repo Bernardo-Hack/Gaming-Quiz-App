@@ -1,7 +1,11 @@
 package com.example.gamingquiz.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.OutlinedTextField
@@ -13,29 +17,56 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.gamingquiz.ui.theme.BackgroundGradient
 import com.example.gamingquiz.ui.theme.TextColor
 
 @Composable
 fun LoginPage(modifier: Modifier = Modifier) {
 
     Column(
-        modifier = modifier.padding(8.dp),
+        modifier = modifier
+            .padding(8.dp)
+            .fillMaxSize()
+            .background(brush = BackgroundGradient),
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
+
     ) {
-        Text(
-            text = "Bem vindo ao Gaming Quiz",
+
+        Box(
             modifier = modifier
-                .padding(16.dp),
+                .fillMaxSize()
+                .weight(1f),
+            contentAlignment = Alignment.Center
+        )
+        {
+            Text(
+                text = "Bem vindo ao Gaming Quiz",
+                modifier = modifier
+                    .padding(8.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 45.sp,
+                color = TextColor
+            )
+        }
+        Text(
+            text = "Insira seu nome para iniciar o jogo.",
+            modifier = modifier
+                .padding(8.dp)
+                .weight(2f, fill = false),
             textAlign = TextAlign.Center,
-            fontSize = 45.sp,
+            fontSize = 20.sp,
             color = TextColor
         )
 
+
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
-                .padding(10.dp)
+                .height(200.dp)
+                .fillMaxSize()
+                .weight(2f),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
                 value = "",
@@ -43,19 +74,22 @@ fun LoginPage(modifier: Modifier = Modifier) {
                 label = { Text("Nome:") },
                 modifier = modifier
                     .padding(15.dp)
+                    .weight(1f, fill = false)
             )
 
             FilledTonalButton(
                 onClick = { },
                 modifier = modifier
+                    .weight(2f, fill = false)
             ) {
                 Text(
-                    text = "Bem vindo ao Gaming Quiz",
+                    text = "Iniciar",
                     modifier = modifier
-                        .padding(10.dp),
+                        .padding(15.dp),
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
                 )
+
             }
         }
     }
