@@ -11,19 +11,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.gamingquiz.R
-import com.example.gamingquiz.ui.theme.AppBackgroundColor
-import com.example.gamingquiz.ui.theme.TextColor
+import com.example.gamingquiz.ui.theme.AppTheme
+import com.example.gamingquiz.ui.theme.MyTypography
+import com.example.gamingquiz.ui.theme.PanelGradient
 
 @Composable
-fun QuestionCard(modifier: Modifier = Modifier, questionText: String, imageUrl: Int) {
+fun QuestionCard(
+    modifier: Modifier = Modifier,
+    question: String,
+    imageUrl: Int
+) {
     Box(
         modifier = modifier
-            .background(color = AppBackgroundColor)
+            .background(brush = PanelGradient)
     ) {
         Column(
             modifier = modifier,
@@ -31,11 +34,9 @@ fun QuestionCard(modifier: Modifier = Modifier, questionText: String, imageUrl: 
         ) {
 
             Text(
-                text = questionText,
+                text = question,
                 modifier = modifier.padding(16.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 30.sp,
-                color = TextColor
+                style = MyTypography.titleLarge
             )
 
             Image(
@@ -51,5 +52,7 @@ fun QuestionCard(modifier: Modifier = Modifier, questionText: String, imageUrl: 
 @Preview(showBackground = true)
 @Composable
 fun CardPreview() {
-    QuestionCard(questionText = "What company does this logo belong to?", imageUrl = R.drawable.john_doe)
+    AppTheme {
+        QuestionCard(question = "What company does this logo belong to?", imageUrl = R.drawable.john_doe)
+    }
 }

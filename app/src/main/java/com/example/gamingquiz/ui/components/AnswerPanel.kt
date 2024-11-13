@@ -1,28 +1,30 @@
 package com.example.gamingquiz.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.gamingquiz.ui.theme.LightBackgroundColor
-import com.example.gamingquiz.ui.theme.PrimaryColor
-import com.example.gamingquiz.ui.theme.TextColor
+import com.example.gamingquiz.ui.theme.C4lr
 
 @Composable
-fun AnswerButton(btnText: Array<String>, modifier: Modifier = Modifier) {
+fun AnswerPanel(
+    btnText: List<String>,
+    onAnswerSelected: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
 
     val btnModifier = Modifier
         .padding(8.dp)
@@ -36,25 +38,23 @@ fun AnswerButton(btnText: Array<String>, modifier: Modifier = Modifier) {
         items(btnText.size) { index ->
             Box(
                 modifier = modifier
-                    .background(color = LightBackgroundColor)
+                    .background(MaterialTheme.colorScheme.surface)
+                    .border(1.dp, MaterialTheme.colorScheme.onSurface)
                     .padding(8.dp),
                 contentAlignment = Alignment.Center,
-                propagateMinConstraints = false
+                propagateMinConstraints = true
 
             ) {
                 TextButton(
-                    onClick = { println("placeholder") },
+                    onClick = { onAnswerSelected(btnText[index]) },
                     modifier = btnModifier
                 ) {
                     Text(
                         text = btnText[index],
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
-                        color = TextColor
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }
-            VerticalDivider(color = PrimaryColor)
         }
     }
 }
@@ -62,6 +62,6 @@ fun AnswerButton(btnText: Array<String>, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun ComponentPreview() {
-    val btnNames = arrayOf("Answer 1", "Answer 2", "Answer 3", "Answer 4")
-    AnswerButton(btnText = btnNames)
+    val btnNames = listOf("Answer 1", "Answer 2", "Answer 3", "Answer 4")
+    AnswerPanel(btnText = btnNames, onAnswerSelected = {})
 }
