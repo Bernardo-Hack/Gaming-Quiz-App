@@ -1,4 +1,4 @@
-package com.example.gamingquiz.ui
+package com.example.gamingquiz.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
