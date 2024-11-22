@@ -43,8 +43,8 @@ class PlayerViewModel(private val repository: PlayerRepository) : ViewModel() {
         loadPlayers()
     }
 
-    fun clearLeaderboard() = viewModelScope.launch {
-        repository.deleteAllPlayers()
+    fun deletePlayer(name: String) = viewModelScope.launch {
+        repository.deletePlayer(name)
         loadPlayers()
     }
 }

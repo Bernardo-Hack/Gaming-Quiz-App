@@ -20,13 +20,13 @@ import com.example.gamingquiz.ui.theme.LoginBackgroundGradient
 
 @Composable
 fun LoginScreen(onContinueClicked: (String) -> Unit, onLeaderboardClicked: () -> Unit) {
-    var userName by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(brush = LoginBackgroundGradient)
-            .padding(16.dp),
+            .padding(vertical = 20.dp, horizontal = 15.dp),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -46,7 +46,7 @@ fun LoginScreen(onContinueClicked: (String) -> Unit, onLeaderboardClicked: () ->
                 style = MaterialTheme.typography.titleLarge
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Text(
                 text = "Insert your name to start the quiz.",
@@ -56,8 +56,8 @@ fun LoginScreen(onContinueClicked: (String) -> Unit, onLeaderboardClicked: () ->
             Spacer(modifier = Modifier.height(20.dp))
 
             OutlinedTextField(
-                value = userName,
-                onValueChange = { userName = it },
+                value = name,
+                onValueChange = { name = it },
                 label = { Text("Name:") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -67,14 +67,14 @@ fun LoginScreen(onContinueClicked: (String) -> Unit, onLeaderboardClicked: () ->
             Spacer(modifier = Modifier.height(10.dp))
 
             Button(
-                onClick = { onContinueClicked(userName) },
+                onClick = { onContinueClicked(name) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
             ) {
                 Text(
                     text = "Start",
-                    style = MaterialTheme.typography.labelLarge
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
 
@@ -86,8 +86,9 @@ fun LoginScreen(onContinueClicked: (String) -> Unit, onLeaderboardClicked: () ->
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
             ) {
-                Text(text = "Leaderboard",
-                    style = MaterialTheme.typography.labelLarge
+                Text(
+                    text = "Leaderboard",
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
             Spacer(modifier = Modifier.height(50.dp))
@@ -99,6 +100,9 @@ fun LoginScreen(onContinueClicked: (String) -> Unit, onLeaderboardClicked: () ->
 @Composable
 fun PreviewWelcomeScreen() {
     AppTheme {
-        LoginScreen(onContinueClicked = {}, onLeaderboardClicked = {})
+        LoginScreen(
+            onContinueClicked = {},
+            onLeaderboardClicked = {}
+        )
     }
 }

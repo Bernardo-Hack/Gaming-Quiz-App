@@ -10,7 +10,6 @@ fun AppTheme(
 ) {
     MaterialTheme(
         colorScheme = MyColorScheme,
-        shapes = MyShapes,
         typography = MyTypography,
         content = content,
     )

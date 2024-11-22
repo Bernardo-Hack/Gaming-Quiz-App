@@ -1,4 +1,4 @@
-package com.example.gamingquiz.ui.components
+package com.example.gamingquiz.ui.components.questions
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,54 +14,41 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.gamingquiz.ui.theme.C4lr
+import com.example.gamingquiz.data.model.Question
+import com.example.gamingquiz.ui.theme.AppTheme
 
 @Composable
 fun AnswerPanel(
-    btnText: List<String>,
-    onAnswerSelected: (String) -> Unit,
-    modifier: Modifier = Modifier
+    options: List<String>,
+    onAnswerSelected: (Int) -> Unit,
 ) {
 
-    val btnModifier = Modifier
-        .padding(8.dp)
-
     LazyVerticalGrid(
-        modifier = modifier,
         columns = GridCells.Adaptive(minSize = 150.dp),
         state = rememberLazyGridState(),
-        contentPadding = PaddingValues(8.dp),
     ) {
-        items(btnText.size) { index ->
+        items(options.size) { index ->
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .background(MaterialTheme.colorScheme.surface)
                     .border(1.dp, MaterialTheme.colorScheme.onSurface)
-                    .padding(8.dp),
+                    .padding(vertical = 25.dp),
                 contentAlignment = Alignment.Center,
                 propagateMinConstraints = true
 
             ) {
                 TextButton(
-                    onClick = { onAnswerSelected(btnText[index]) },
-                    modifier = btnModifier
+                    onClick = { onAnswerSelected(index) },
+                    shape = MaterialTheme.shapes.large,
                 ) {
                     Text(
-                        text = btnText[index],
+                        text = options[index],
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ComponentPreview() {
-    val btnNames = listOf("Answer 1", "Answer 2", "Answer 3", "Answer 4")
-    AnswerPanel(btnText = btnNames, onAnswerSelected = {})
 }

@@ -10,7 +10,7 @@ import com.example.gamingquiz.data.model.Converters
 import com.example.gamingquiz.data.model.Player
 import com.example.gamingquiz.data.model.Question
 
-@Database(entities = [Player::class, Question::class], version = 2, exportSchema = false)
+@Database(entities = [Player::class, Question::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class) // Use your own Converters class
 abstract class QuizDatabase : RoomDatabase() {
 

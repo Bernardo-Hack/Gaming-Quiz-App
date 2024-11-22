@@ -11,8 +11,8 @@ val C4lr = Color(0xFF42364D)
 val C5lr = Color(0xFF242126)
 val C6lr = Color(0xFF18161A)
 
-val headlinerLargeColor = Color(0xFFC8C8C8)
-val headlinerMediumColor = Color(0xFFAAAAAA)
+val TitleLargeColor = Color(0xFFC8C8C8)
+val TitleMediumColor = Color(0xFFAAAAAA)
 
 val MyColorScheme = darkColorScheme(
     primary = C1lr,
@@ -28,23 +28,14 @@ val LoginBackgroundGradient = Brush.verticalGradient(
     colors = listOf(C2lr, C4lr, C6lr)
 )
 
+val QuestionBackgroundGradient = Brush.linearGradient(
+    colors = listOf(C6lr, C5lr, C6lr)
+)
+
 val LeaderboardBackgroundGradient = Brush.verticalGradient(
-    colors = listOf(C2lr, C4lr, C6lr)
+    colors = listOf(C4lr, C5lr, C6lr)
 )
 
-val HeadlinerLargeGradient = Brush.linearGradient(
-    colors = listOf(C4lr, C6lr)
+val PlayerScoreGradient = Brush.verticalGradient(
+    colors = listOf(C3lr, C5lr)
 )
-
-val HeadlinerMediumGradient = Brush.linearGradient(
-    colors = listOf(
-        Color(127,127,127),
-        C1lr)
-)
-
-val PanelGradient = Brush.linearGradient(
-    colors = listOf(C5lr, C6lr)
-)
-
-val TextColor = C1lr
-

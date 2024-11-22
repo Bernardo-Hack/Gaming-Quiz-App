@@ -3,6 +3,7 @@ package com.example.gamingquiz
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
@@ -14,15 +15,18 @@ import com.example.gamingquiz.data.model.QuestionList
 import com.example.gamingquiz.data.repository.PlayerRepository
 import com.example.gamingquiz.data.repository.QuestionRepository
 import com.example.gamingquiz.data.viewModel.PlayerViewModel
-import com.example.gamingquiz.data.viewModel.QuizViewModelFactory
+import com.example.gamingquiz.data.viewModel.PlayerViewModelFactory
+import com.example.gamingquiz.data.viewModel.QuestionViewModel
+import com.example.gamingquiz.data.viewModel.QuestionViewModelFactory
+import com.example.gamingquiz.ui.screens.LeaderboardScreen
+import com.example.gamingquiz.ui.screens.LoginScreen
+import com.example.gamingquiz.ui.screens.QuestionScreen
 import com.example.gamingquiz.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val dao = QuizDatabase.getDatabase(application).questionDao()
-        val repository = QuestionRepository(dao)
-        val factory = QuizViewModelFactory(repository)
+        enableEdgeToEdge()
         setContent {
             MyApp()
         }
@@ -33,27 +37,54 @@ class MainActivity : ComponentActivity() {
 fun MyApp() {
     AppTheme {
         val navController = rememberNavController()
-        SetupNavGraph(navController = navController)
+        SetupRoutes(navController = navController)
     }
 }
 
 @Composable
-fun SetupNavGraph(navController: NavHostController) {
+fun SetupRoutes(navController: NavHostController) {
     val context = LocalContext.current
     val questions = QuestionList().getQuestions()
+
+    val questionsDAO = QuizDatabase.getDatabase(context).questionDao()
+    val repository = QuestionRepository(questionsDAO)
+    val questionsViewModel = QuestionViewModelFactory(repository).create(QuestionViewModel::class.java)
+
     val playerDAO = QuizDatabase.getDatabase(context).playerDao()
     val playerRepository = PlayerRepository(playerDAO)
-    val playerViewModel = PlayerViewModel(playerRepository)
+    val playerViewModel = PlayerViewModelFactory(playerRepository).create(PlayerViewModel::class.java)
 
-    NavHost(navController = navController, startDestination = "main") {
-        composable("main") {
+    NavHost(navController = navController, startDestination = "mainScreen") {
+        composable(route = "mainScreen") {
+            LoginScreen(
+                onContinueClicked = { playerName ->
+                    navController.currentBackStackEntry?.savedStateHandle?.set("playerName", playerName)
+                    navController.navigate("questionScreen")
+                },
+                onLeaderboardClicked = {
+                    navController.navigate("leaderboardScreen")
+                }
+            )
+        }
+        composable(route = "questionScreen") {
+            questionsViewModel.insertQuestions(questions)
+            QuestionScreen(
+                navController = navController,
+                questionViewModel = questionsViewModel,
+                playerViewModel = playerViewModel,
+                onFinish = {
+                    navController.navigate("leaderboardScreen")
+                },
+            )
 
         }
-        composable("quizScreen") {
-
-        }
-        composable("leaderboard") {
-
+        composable(route = "leaderboardScreen") {
+            LeaderboardScreen(
+                playerViewModel = playerViewModel,
+                onExit = {
+                    navController.navigate("mainScreen")
+                },
+            )
         }
     }
 }

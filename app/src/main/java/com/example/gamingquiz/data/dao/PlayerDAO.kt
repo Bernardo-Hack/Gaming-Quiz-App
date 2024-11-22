@@ -18,8 +18,8 @@ interface PlayerDAO {
     @Query("SELECT * FROM player ORDER BY score DESC")
     suspend fun getAllPlayers(): List<Player>
 
-    @Query("DELETE FROM player")
-    suspend fun deleteAllPlayers()
+    @Query("DELETE FROM player WHERE name = :name")
+    suspend fun deletePlayer(name: String)
 
     @Update
     suspend fun updatePlayer(player: Player)

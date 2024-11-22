@@ -10,10 +10,10 @@ data class Question(
     val question: String,
     var options: List<String>,
     var correctAnswer: Int,
-    val imgPath: Int
+    val imgPath: String
 ) {
     fun randomizeOptions() {
-        val newList = this.options.toMutableList()
+        val newList = this.options.shuffled()
         val newCorrectAnswer = newList.indexOf(options[correctAnswer])
 
         this.options = newList
